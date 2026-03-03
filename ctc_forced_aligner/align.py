@@ -147,8 +147,9 @@ def cli():
         text, args.romanize, args.language, args.split_size, args.star_frequency
     )
 
-    tokens_no_star = [t for t in tokens_starred if t != "<star>"]
-    text_no_star = [t for t in text_starred if t != "<star>"]
+    pairs = [(t, tx) for t, tx in zip(tokens_starred, text_starred) if t != "<star>" and t.strip() != ""]
+    tokens_no_star = [t for t, _ in pairs]
+    text_no_star = [tx for _, tx in pairs]
 
     segments, scores, blank_token = get_alignments(
         emissions,
