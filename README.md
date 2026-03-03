@@ -118,6 +118,34 @@ results = postprocess_results(text_no_star, spans, ...)  # Consistent!
 
 ---
 
+### Bug 5: Empty Token Filtering (align.py)
+
+**Issue**: Numbers and special characters that romanize to empty strings caused IndexError.
+
+```python
+# Example text: "3) Lübnan'a 27 Eylül 2024"
+# After romanization: token="" for "3)", "27", "2024"
+# This caused: IndexError: list index out of range
+
+# After (FIXED):
+# Filter out empty tokens while maintaining alignment between tokens and text
+pairs = [(t, tx) for t, tx in zip(tokens_starred, text_starred) 
+         if t != "<star>" and t.strip() != ""]
+tokens_no_star = [t for t, _ in pairs]
+text_no_star = [tx for _, tx in pairs]
+
+# Also add validation to give clear error message
+if not tokens_no_star:
+    raise ValueError(
+        f"No valid tokens found after preprocessing. "
+        f"This may happen if the text contains only characters not in the model's vocabulary..."
+    )
+```
+
+**Explanation**: When text contains numbers like "3)", "27", "2024", the romanizer converts them to empty strings. These empty tokens caused IndexError when iterating through characters. The fix filters them out and provides a clear error message for edge cases.
+
+---
+
 ## Root Cause Analysis
 
 The MMS-300M forced aligner model expects:
