@@ -1,0 +1,13 @@
+.git
+__pycache__
+*.pyc
+.pytest_cache
+*.egg-info
+dist
+build
+.eggs
+ctc-aligner-venv
+venv
+env
+*.so
+.DS_Store

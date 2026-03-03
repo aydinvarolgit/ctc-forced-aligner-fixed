@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ctc-forced-aligner"
+version = "0.1.1"
+description = "Text to speech alignment using CTC forced alignment (fixed version)"
+authors = [{name = "MahmoudAshraf97", url = "https://github.com/MahmoudAshraf97/ctc-forced-aligner"}]
+license = {text = "MIT"}
+requires-python = ">=3.9"
+dependencies = [
+    "torch",
+    "torchaudio",
+    "numpy",
+    "transformers>=4.41.0",
+    "packaging",
+]
+
+[project.scripts]
+ctc-forced-aligner = "ctc_forced_aligner.align:cli"
