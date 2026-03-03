@@ -150,6 +150,26 @@ ctc-forced-aligner \
   --split_size sentence
 ```
 
+## Known Edge Cases
+
+### Empty Token Issue
+If the text contains only characters that romanize to empty strings (e.g., pure numbers "12345" or special characters "@#$"), the aligner will now raise a clear error message:
+
+```
+ValueError: No valid tokens found after preprocessing. This may happen if the text 
+contains only characters not in the model's vocabulary (e.g., numbers, special 
+characters, or non-Latin scripts without --romanize).
+```
+
+**Workaround**: Ensure your text contains at least some alphabetic characters, or remove numbers/special characters from the input text.
+
+### Characters Not in Vocabulary
+The default MMS-300M model uses a 32-character Latin alphabet. Characters that may cause issues:
+- Turkish: ş, ç, ğ, ü, ö, ı (use `--romanize` flag)
+- Numbers: 0-9 (romanize to empty)
+- Special symbols: @, #, $, %, etc. (romanize to empty)
+- Non-Latin scripts: Chinese, Arabic, Japanese, etc. (require `--romanize` or language-specific model)
+
 ## License
 
 MIT License - see original repo: https://github.com/MahmoudAshraf97/ctc-forced-aligner

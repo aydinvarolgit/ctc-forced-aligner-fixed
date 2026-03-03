@@ -151,6 +151,14 @@ def cli():
     tokens_no_star = [t for t, _ in pairs]
     text_no_star = [tx for _, tx in pairs]
 
+    if not tokens_no_star:
+        raise ValueError(
+            f"No valid tokens found after preprocessing. "
+            f"This may happen if the text contains only characters not in the model's vocabulary "
+            f"(e.g., numbers, special characters, or non-Latin scripts without --romanize). "
+            f"Original text: {text[:100]}..."
+        )
+
     segments, scores, blank_token = get_alignments(
         emissions,
         tokens_no_star,
