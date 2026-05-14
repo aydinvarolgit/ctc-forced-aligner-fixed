@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "ctc-forced-aligner"
 version = "0.1.1"
 description = "Text to speech alignment using CTC forced alignment (fixed version)"
-authors = [{name = "MahmoudAshraf97", url = "https://github.com/MahmoudAshraf97/ctc-forced-aligner"}]
+authors = [{name = "MahmoudAshraf97"}]
 license = {text = "MIT"}
 requires-python = ">=3.9"
 dependencies = [
